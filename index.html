@@ -35,10 +35,6 @@
                     <label for="interval">Intervalo entre comandos (segundos):</label>
                     <input type="number" value="3" id="interval" />
                 </div>
-                <div class="form-group">
-                    <label for="agressors">Quantidade de agressores:</label>
-                    <input type="number" value="8" id="agressors" />
-                </div>
 
                 <button onclick="play()" class="btn btn-primary" type="button">Iniciar</button>
                 <button onclick="stop()" class="btn btn-secundary" type="button">Parar</button>
@@ -51,7 +47,7 @@
             let interval = 0;
 
             const minAgressors = 1;
-            let maxAgressors = 0;
+            const maxAgressors = 8;
 
             const intensities = ["curto", "medio", "longo"];
             const minIntensity = 0;
@@ -86,12 +82,7 @@
                     document.getElementById("interval").value = "3";
                 }
                 interval = parseInt(document.getElementById("interval").value);
-
-                if (document.getElementById("agressors").value == "") {
-                    document.getElementById("agressors").value = "8";
-                }
-                maxAgressors = parseInt(document.getElementById("agressors").value);
-
+                
                 mustStop = false;
                 command();
             }
