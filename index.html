@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Treino de múltiplas defesas</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <style>
+            .container {
+                padding-top: 15px;
+            }
+
+            form {
+                margin-top: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <audio id="1"><source src="1.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>
+        <audio id="2"><source src="2.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>
+        <audio id="3"><source src="3.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>
+        <audio id="4"><source src="4.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>
+        <audio id="5"><source src="5.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>
+        <audio id="6"><source src="6.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>
+        <audio id="7"><source src="7.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>
+        <audio id="8"><source src="8.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>
+        <audio id="curto"><source src="curto.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>
+        <audio id="medio"><source src="medio.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>
+        <audio id="longo"><source src="longo.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>
+
+        <div class="container">
+            <h1>Treino de múltiplas defesas</h1>
+            <form>
+                <div class="form-group">
+                    <label for="interval">Intervalo entre comandos (segundos):</label>
+                    <input type="number" value="3" id="interval" />
+                </div>
+
+                <button onclick="play()" class="btn btn-primary" type="button">Iniciar</button>
+                <button onclick="stop()" class="btn btn-secundary" type="button">Parar</button>
+            </form>
+        </div>
+
+        <script>
+            let mustStop = false;
+
+            const minNumber = 1;
+            const maxNumber = 8;
+
+            const intensities = ["curto", "medio", "longo"];
+            const minIntensity = 0;
+            const maxIntensity = intensities.length - 1;
+
+            function random(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            async function command(interval) {
+                setTimeout(async () => {
+                    if (!mustStop) {
+                        let number = document.getElementById(random(minNumber, maxNumber).toString())
+                        number.play();
+
+                        await sleep(700);
+
+                        let intensity = document.getElementById(intensities[random(minIntensity, maxIntensity)]);
+                        intensity.play();
+
+                        command(interval);
+                    }
+                }, interval * 1000);
+            }
+
+            async function play() {
+                if (document.getElementById("interval").value == "") {
+                    document.getElementById("interval").value = "3";
+                }
+                interval = parseInt(document.getElementById("interval").value);
+
+                mustStop = false;
+                command(interval);
+            }
+
+            function stop() {
+                mustStop = true;
+            }
+        </script>
+    </body>
+</html>
