@@ -121,6 +121,7 @@
 
         <script>
             let execution;
+            let mustStop = false;
 
             let interval = 0;
 
@@ -157,6 +158,10 @@
             }
 
             async function command() {
+                if (mustStop) {
+                    return;
+                }
+
                 execution = setTimeout(async () => {
                     let numberAggressor = random(minAgressors, maxAgressors).toString();
                     let number = document.getElementById(numberAggressor);
@@ -164,12 +169,10 @@
                     number.addEventListener("ended", speakType);
                     number.play();
                     changeColorAggressor(numberAggressor);
-
                 }, interval * 1000);
             }
 
             async function play() {
-                sleep(3000);
                 if (document.getElementById("interval").value == "") {
                     document.getElementById("interval").value = "3";
                 }
@@ -186,12 +189,14 @@
                 maxType = typesOfBlow.length - 1;
 
                 document.getElementById("start").disabled = true;
+                mustStop = false;
                 command();
             }
 
             function stop() {
                 if (execution != null) {
                     clearTimeout(execution);
+                    mustStop = true;
                 }
 
                 document.getElementById("start").disabled = false;
