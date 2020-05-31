@@ -33,25 +33,34 @@
             <form>
                 <div class="form-group">
                     <label for="interval">Intervalo entre comandos (segundos):</label>
-                    <input type="number" value="3" id="interval" />
+                    <input type="number" value="3" id="interval" name="interval" />
                 </div>
 
-                <button onclick="play()" class="btn btn-primary" type="button">Iniciar</button>
+                <div class="form-group">
+                    <label for="types">Tipos de golpe:</label>
+                    <select name="types" id="types" multiple="multiple">
+                        <option value="curto" selected>Curto</option>
+                        <option value="medio" selected>Médio</option>
+                        <option value="longo" selected>Longo</option>
+                    </select>
+                </div>
+
+                <button onclick="play()" class="btn btn-primary" type="button" id="start">Iniciar</button>
                 <button onclick="stop()" class="btn btn-secundary" type="button">Parar</button>
             </form>
         </div>
 
         <script>
-            let mustStop = false;
+            let execution;
 
             let interval = 0;
 
             const minAgressors = 1;
             const maxAgressors = 8;
 
-            const intensities = ["curto", "medio", "longo"];
-            const minIntensity = 0;
-            const maxIntensity = intensities.length - 1;
+            let typesOfBlow = [];
+            const minType = 0;
+            let maxType = 0;
 
             function random(min, max) {
                 return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -61,34 +70,49 @@
                 return new Promise(resolve => setTimeout(resolve, ms));
             }
 
+            function speakType(){
+                let typeOfBlow = document.getElementById(typesOfBlow[random(minType, maxType)]);
+                typeOfBlow.removeEventListener("ended", command);
+                typeOfBlow.addEventListener("ended", command);
+                typeOfBlow.play();
+            }
+
             async function command() {
-                setTimeout(async () => {
-                    if (!mustStop) {
-                        let number = document.getElementById(random(minAgressors, maxAgressors).toString())
-                        number.play();
-
-                        await sleep(700);
-
-                        let intensity = document.getElementById(intensities[random(minIntensity, maxIntensity)]);
-                        intensity.play();
-
-                        command();
-                    }
+                execution = setTimeout(async () => {
+                    let number = document.getElementById(random(minAgressors, maxAgressors).toString())
+                    number.removeEventListener("ended", speakType);
+                    number.addEventListener("ended", speakType);
+                    number.play();
                 }, interval * 1000);
             }
 
             async function play() {
+                sleep(3000);
                 if (document.getElementById("interval").value == "") {
                     document.getElementById("interval").value = "3";
                 }
                 interval = parseInt(document.getElementById("interval").value);
-                
-                mustStop = false;
+                 
+                typesOfBlow = [];
+                let selectedTypes = document.getElementById("types").selectedOptions;
+                if (selectedTypes.length == 0) {
+                    selectedTypes = document.getElementById("types").options;
+                }
+                for (let i = 0; i < selectedTypes.length; i++) {
+                    typesOfBlow.push(selectedTypes[i].value);
+                }
+                maxType = typesOfBlow.length - 1;
+
+                document.getElementById("start").disabled = true;
                 command();
             }
 
             function stop() {
-                mustStop = true;
+                if (execution != null) {
+                    clearTimeout(execution);
+                }
+
+                document.getElementById("start").disabled = false;
             }
         </script>
     </body>
