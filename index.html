@@ -13,6 +13,31 @@
             form {
                 margin-top: 30px;
             }
+
+            .black{
+                background-color: #000;
+                border-radius: 5px;
+            }
+
+            h1{
+                color: #fff;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .icons{
+                margin-top: 50px;
+                width: 60%;
+                margin: 0 auto;
+            }
+
+            .col-md-4 {
+                width: 30%;
+            }
+
+            .red{
+                color: red;
+            }
         </style>
     </head>
     <body>
@@ -29,24 +54,68 @@
         <audio id="longo"><source src="longo.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>
 
         <div class="container">
-            <h1>Treino de múltiplas defesas</h1>
+            <div class="black">
+                <h1>Defesa contra múltiplos agressores</h1>
+            </div>
             <form>
-                <div class="form-group">
-                    <label for="interval">Intervalo entre comandos (segundos):</label>
-                    <input type="number" value="3" id="interval" name="interval" />
+                <div>
+                    <div class="form-group">
+                        <label for="interval">Intervalo entre comandos (segundos):</label>
+                        <input type="number" value="3" id="interval" name="interval" class="form-control" />
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="types">Tipos de golpe:</label>
+                        <select name="types" id="types" multiple="multiple" class="form-control">
+                            <option value="curto" selected>Curto</option>
+                            <option value="medio" selected>Médio</option>
+                            <option value="longo" selected>Longo</option>
+                        </select>
+                    </div>
+    
+                    <button onclick="play()" class="btn btn-dark" type="button" id="start">Iniciar</button>
+                    <button onclick="stop()" class="btn btn-danger" type="button">Parar</button>
                 </div>
 
-                <div class="form-group">
-                    <label for="types">Tipos de golpe:</label>
-                    <select name="types" id="types" multiple="multiple">
-                        <option value="curto" selected>Curto</option>
-                        <option value="medio" selected>Médio</option>
-                        <option value="longo" selected>Longo</option>
-                    </select>
+                <div class="container icons">
+                    <div class="row">
+                        <svg class="bi bi-person-fill col-md-4" id="aggressor-1" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
+                        <svg class="bi bi-person-fill col-md-4" id="aggressor-2" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
+                        <svg class="bi bi-person-fill col-md-4" id="aggressor-3" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
+                    </div>
+                    
+                    <div class="row">
+                        <svg class="bi bi-person-fill col-md-4" id="aggressor-8" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
+                        <svg class="bi bi-person-circle col-md-4" id="me" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z"/>
+                            <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                            <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"/>
+                        </svg>
+                        <svg class="bi bi-person-fill col-md-4" id="aggressor-4" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
+                    </div>
+                   
+                    <div class="row">
+                        <svg class="bi bi-person-fill col-md-4" id="aggressor-7" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
+                        <svg class="bi bi-person-fill col-md-4" id="aggressor-6" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
+                        <svg class="bi bi-person-fill col-md-4" id="aggressor-5" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
+                    </div>
                 </div>
-
-                <button onclick="play()" class="btn btn-primary" type="button" id="start">Iniciar</button>
-                <button onclick="stop()" class="btn btn-secundary" type="button">Parar</button>
             </form>
         </div>
 
@@ -70,6 +139,16 @@
                 return new Promise(resolve => setTimeout(resolve, ms));
             }
 
+            function changeColorAggressor(number) {
+                var aggressors = document.getElementsByClassName("col-md-4");
+                [].forEach.call(aggressors, function(ag) {
+                    ag.classList.remove("red");
+                });
+
+                var aggressor = document.getElementById("aggressor-" + number);
+                aggressor.classList.add("red");
+            }
+
             function speakType(){
                 let typeOfBlow = document.getElementById(typesOfBlow[random(minType, maxType)]);
                 typeOfBlow.removeEventListener("ended", command);
@@ -79,10 +158,13 @@
 
             async function command() {
                 execution = setTimeout(async () => {
-                    let number = document.getElementById(random(minAgressors, maxAgressors).toString())
+                    let numberAggressor = random(minAgressors, maxAgressors).toString();
+                    let number = document.getElementById(numberAggressor);
                     number.removeEventListener("ended", speakType);
                     number.addEventListener("ended", speakType);
                     number.play();
+                    changeColorAggressor(numberAggressor);
+
                 }, interval * 1000);
             }
 
